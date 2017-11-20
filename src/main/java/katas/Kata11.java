@@ -2,10 +2,13 @@ package katas;
 
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableMap;
+
+import model.BoxArt;
 import util.DataUtil;
 
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 /*
     Goal: Create a datastructure from the given data:
@@ -58,13 +61,22 @@ import java.util.Map;
 */
 public class Kata11 {
     public static List<Map> execute() {
-        List<Map> lists = DataUtil.getLists();
-        List<Map> videos = DataUtil.getVideos();
-        List<Map> boxArts = DataUtil.getBoxArts();
-        List<Map> bookmarkList = DataUtil.getBookmarkList();
-
-        return ImmutableList.of(ImmutableMap.of("name", "someName", "videos", ImmutableList.of(
-                ImmutableMap.of("id", 5, "title", "The Chamber", "time", 123, "boxart", "someUrl")
-        )));
+    	return DataUtil.getLists().stream()
+    		.map(ls -> ImmutableMap.of("name", ls.get("name"), "videos", 
+				DataUtil.getVideos().stream()
+				.filter(mv -> mv.get("listId").equals(ls.get("id")))
+				.map(mv -> ImmutableMap.of("id", mv.get("id"), "title", mv.get("title"), 
+					"time", DataUtil.getBookmarkList().stream()
+					.filter(bk -> bk.get("videoId").equals(mv.get("id")))
+					.map(bk -> bk.get("time")).collect(Collectors.toList()).get(0),
+					"boxart", DataUtil.getBoxArts().stream()
+					.filter(bx -> bx.get("videoId").equals(mv.get("id")))
+					.reduce((min, box) -> { 
+	        			int minSize = (Integer) min.get("width") * (Integer) min.get("height");
+	        			int boxSize = (Integer) box.get("width") * (Integer) box.get("height");
+	        			return (boxSize < minSize) ? box : min;
+        			}).map(bx -> bx.get("url")).get()))
+				.collect(Collectors.toList())))
+    		.collect(Collectors.toList());
     }
 }

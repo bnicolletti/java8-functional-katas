@@ -1,13 +1,18 @@
 package util;
 
-import com.google.common.collect.ImmutableList;
-import com.google.common.collect.ImmutableMap;
-import model.*;
-
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
+
+import com.google.common.collect.ImmutableList;
+import com.google.common.collect.ImmutableMap;
+
+import model.Bookmark;
+import model.BoxArt;
+import model.InterestingMoment;
+import model.Movie;
+import model.MovieList;
 
 public class DataUtil {
     /*
@@ -77,7 +82,7 @@ public class DataUtil {
     ]
     */
     public static List<Movie> getMovies() {
-        List<Movie> result = new ArrayList<Movie>();
+        List<Movie> result = new ArrayList<>();
         result.add(new Movie(70111470,
                 "Die Hard",
                 ImmutableList.of(
@@ -216,7 +221,7 @@ public class DataUtil {
     ]
     */
     public static List<MovieList> getMovieLists() {
-        List<MovieList> result = new ArrayList<MovieList>();
+        List<MovieList> result = new ArrayList<>();
         result.add(new MovieList("New Releases", getMovies().subList(0, 2)));
         result.add(new MovieList("Dramas", getMovies().subList(2, 4)));
         return result;

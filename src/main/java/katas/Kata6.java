@@ -1,9 +1,9 @@
 package katas;
 
-import model.Movie;
-import util.DataUtil;
+import java.util.stream.Collectors;
 
-import java.util.List;
+import model.BoxArt;
+import util.DataUtil;
 
 /*
     Goal: Retrieve the url of the largest boxart using map() and reduce()
@@ -12,8 +12,16 @@ import java.util.List;
 */
 public class Kata6 {
     public static String execute() {
-        List<Movie> movies = DataUtil.getMovies();
+        Integer largest = DataUtil.getMovies().stream()
+        		.flatMap(mv -> mv.getBoxarts().stream())
+        		.map(mv -> mv.getWidth() * mv.getHeight())
+        		.reduce(Integer::max)
+        		.orElse(0);
 
-        return "someUrl";
+        return DataUtil.getMovies().stream()
+        		.flatMap(mv -> mv.getBoxarts().stream())
+        		.filter(mv -> largest.equals(mv.getWidth() * mv.getHeight()))
+        		.map(BoxArt::getUrl)
+        		.collect(Collectors.joining());
     }
 }
