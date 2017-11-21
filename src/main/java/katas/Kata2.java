@@ -14,8 +14,8 @@ import util.DataUtil;
 public class Kata2 {
     public static List<Integer> execute() {
     	return DataUtil.getMovies().stream()
-        		.filter(mv -> mv.getRating().equals(5.0))
-        		.map(Movie::getId)
-        		.collect(Collectors.toList());
+    		.filter(movie -> movie.getRating().equals(5.0))
+    		.map(Movie::getId)
+    		.collect(Collectors.toList());
     }
 }

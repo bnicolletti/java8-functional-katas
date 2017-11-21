@@ -11,8 +11,8 @@ import util.DataUtil;
 public class Kata5 {
     public static Double execute() {
     	return DataUtil.getMovies().stream()
-        		.map(Movie::getRating)
-        		.reduce(Double::max)
-        		.orElse(0.0);
+    		.map(Movie::getRating)
+    		.reduce(Double::max)
+    		.orElse(0.0);
     }
 }

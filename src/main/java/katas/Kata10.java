@@ -52,11 +52,11 @@ import util.DataUtil;
 public class Kata10 {
     public static List<Map> execute() {
     	return DataUtil.getLists().stream()
-        		.map(ls -> ImmutableMap.of("name", ls.get("name"), "videos", 
-        				DataUtil.getVideos().stream()
-        				.filter(mv -> mv.get("listId").equals(ls.get("id")))
-        				.map(mv -> ImmutableMap.of("id", mv.get("id"), "title", mv.get("title")))
-        				.collect(Collectors.toList())))
-        		.collect(Collectors.toList());
+    		.map(list -> ImmutableMap.of("name", list.get("name"), "videos", 
+				DataUtil.getVideos().stream()
+				.filter(video -> video.get("listId").equals(list.get("id")))
+				.map(video -> ImmutableMap.of("id", video.get("id"), "title", video.get("title")))
+				.collect(Collectors.toList())))
+    		.collect(Collectors.toList());
     }
 }

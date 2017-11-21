@@ -19,8 +19,8 @@ import util.DataUtil;
 public class Kata8 {
     public static List<Map> execute() {
     	return StreamUtils.zip(DataUtil.getMovies().stream().map(Movie::getId), 
-        				DataUtil.getBookMarks().stream().map(Bookmark::getId), 
-        				(mv, bk) -> ImmutableMap.of("videoId", mv, "bookmarkId", bk))
-        		.collect(Collectors.toList());
+				DataUtil.getBookMarks().stream().map(Bookmark::getId), 
+				(movie, bookmark) -> ImmutableMap.of("videoId", movie, "bookmarkId", bookmark))
+    		.collect(Collectors.toList());
     }
 }

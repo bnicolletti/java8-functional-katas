@@ -16,11 +16,11 @@ import util.DataUtil;
 public class Kata4 {
     public static List<Map> execute() {
     	return DataUtil.getMovieLists().stream()
-        		.flatMap(mv -> mv.getVideos().stream())
-        		.map(mv -> ImmutableMap.of("id", mv.getId(), "title", mv.getTitle(), 
-        			"boxart", mv.getBoxarts().stream()
-        			.filter(bx -> bx.getWidth().equals(150) && bx.getHeight().equals(200))
-        			.map(bx -> bx.getUrl()).collect(Collectors.joining())))
-        		.collect(Collectors.toList());
+    		.flatMap(movieList -> movieList.getVideos().stream())
+    		.map(video -> ImmutableMap.of("id", video.getId(), "title", video.getTitle(), 
+    			"boxart", video.getBoxarts().stream()
+    			.filter(boxart -> boxart.getWidth().equals(150) && boxart.getHeight().equals(200))
+    			.map(boxart -> boxart.getUrl()).collect(Collectors.joining())))
+    		.collect(Collectors.toList());
     }
 }

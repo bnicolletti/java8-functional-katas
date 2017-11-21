@@ -1,14 +1,12 @@
 package katas;
 
-import com.google.common.collect.ImmutableList;
-import com.google.common.collect.ImmutableMap;
-
-import model.BoxArt;
-import util.DataUtil;
-
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
+
+import com.google.common.collect.ImmutableMap;
+
+import util.DataUtil;
 
 /*
     Goal: Create a datastructure from the given data:
@@ -62,20 +60,20 @@ import java.util.stream.Collectors;
 public class Kata11 {
     public static List<Map> execute() {
     	return DataUtil.getLists().stream()
-    		.map(ls -> ImmutableMap.of("name", ls.get("name"), "videos", 
+    		.map(list -> ImmutableMap.of("name", list.get("name"), "videos", 
 				DataUtil.getVideos().stream()
-				.filter(mv -> mv.get("listId").equals(ls.get("id")))
-				.map(mv -> ImmutableMap.of("id", mv.get("id"), "title", mv.get("title"), 
+				.filter(video -> video.get("listId").equals(list.get("id")))
+				.map(video -> ImmutableMap.of("id", video.get("id"), "title", video.get("title"), 
 					"time", DataUtil.getBookmarkList().stream()
-					.filter(bk -> bk.get("videoId").equals(mv.get("id")))
-					.map(bk -> bk.get("time")).collect(Collectors.toList()).get(0),
+					.filter(bookmark -> bookmark.get("videoId").equals(video.get("id")))
+					.map(bookmark -> bookmark.get("time")),
 					"boxart", DataUtil.getBoxArts().stream()
-					.filter(bx -> bx.get("videoId").equals(mv.get("id")))
+					.filter(boxart -> boxart.get("videoId").equals(video.get("id")))
 					.reduce((min, box) -> { 
 	        			int minSize = (Integer) min.get("width") * (Integer) min.get("height");
 	        			int boxSize = (Integer) box.get("width") * (Integer) box.get("height");
 	        			return (boxSize < minSize) ? box : min;
-        			}).map(bx -> bx.get("url")).get()))
+        			}).map(boxart -> boxart.get("url"))))
 				.collect(Collectors.toList())))
     		.collect(Collectors.toList());
     }

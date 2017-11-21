@@ -18,17 +18,17 @@ import util.DataUtil;
 public class Kata9 {
     public static List<Map> execute() {
     	return DataUtil.getMovieLists().stream()
-        		.flatMap(mv -> mv.getVideos().stream())
-        		.map(mv -> ImmutableMap.of("id", mv.getId(), "title", mv.getTitle(), 
-        				"url", mv.getBoxarts().stream().reduce((min, box) -> { 
-		        			int minSize = min.getWidth() * min.getHeight();
-		        			int boxSize = box.getWidth() * box.getHeight();
-		        			return (boxSize < minSize) ? box : min;
-		        		}).map(BoxArt::getUrl).get(), 
-        				"time", mv.getInterestingMoments().stream()
-        					.filter(im -> im.getType().equals("Middle"))
-        					.map(InterestingMoment::getTime)
-        					.collect(Collectors.toList()).get(0)))
-        		.collect(Collectors.toList());
+    		.flatMap(movieList -> movieList.getVideos().stream())
+    		.map(video -> ImmutableMap.of("id", video.getId(), "title", video.getTitle(), 
+				"url", video.getBoxarts().stream().reduce((min, box) -> { 
+        			int minSize = min.getWidth() * min.getHeight();
+        			int boxSize = box.getWidth() * box.getHeight();
+        			return (boxSize < minSize) ? box : min;
+        		}).map(BoxArt::getUrl), 
+				"time", video.getInterestingMoments().stream()
+					.filter(interestingMoment -> "Middle".equals(interestingMoment.getType()))
+					.map(InterestingMoment::getTime)
+					.findFirst()))
+    		.collect(Collectors.toList());
     }
 }
