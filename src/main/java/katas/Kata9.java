@@ -12,7 +12,7 @@ import util.DataUtil;
 
 /*
     Goal: Retrieve each video's id, title, middle interesting moment time, and smallest box art url
-    DataSource: DataUtil.getMovies()
+    DataSource: DataUtil.getMovieLists()
     Output: List of ImmutableMap.of("id", 5, "title", "some title", "time", new Date(), "url", "someUrl")
 */
 public class Kata9 {

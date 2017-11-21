@@ -66,7 +66,7 @@ public class Kata11 {
 				.map(video -> ImmutableMap.of("id", video.get("id"), "title", video.get("title"), 
 					"time", DataUtil.getBookmarkList().stream()
 					.filter(bookmark -> bookmark.get("videoId").equals(video.get("id")))
-					.map(bookmark -> bookmark.get("time")),
+					.map(bookmark -> bookmark.get("time")).findFirst(),
 					"boxart", DataUtil.getBoxArts().stream()
 					.filter(boxart -> boxart.get("videoId").equals(video.get("id")))
 					.reduce((min, box) -> { 
